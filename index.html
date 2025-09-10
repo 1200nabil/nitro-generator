@@ -1,101 +1,376 @@
-<html><head>
- <title>Nabil's Nitro Generator</title>
- <link
-   id="favicon"
-    rel="icon"
-    href="https://images-ext-2.discordapp.net/external/RklsBjMzOtAVbAd_iJP609oaJumZniTe7u__snYJ-Cs/https/media.discordapp.net/attachments/799335597764116510/804196534005661787/unknown.png"
-    type="image/x-icon"
-  />
-<meta content="width=device-width, initial-scale=1" name="viewport">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Nabil's Nitro Generator">
-<meta property="og:description" content="Generate endless unchecked nitro codes!">
-<meta property="og:url" content="http://sitesgithub.github.io/nitro/index.html">
-<meta property="og:image" content="https://media.discordapp.net/attachments/799335597764116510/804196534005661787/unknown.png">
-<style>
-@media (max-width: 500px) {
-textarea {
-  height: 100px;
-  line-height:1.25;
-}
-button {
-	background-color:#ffffff;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:50px;
-	padding:50px 60px;
-	text-decoration:none;
-}
-}
- 
-.button0 {
-  font-size:20px;
-  padding:50px 60px;  
-}
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>nabil's nitro generator</title>
+  <link id="favicon" rel="icon" href="https://raw.githubusercontent.com/1200nabil/nitro-generator/refs/heads/main/nitro.png" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      /* Dark Theme Colors */
+      --bg-dark: #0d0d0d;
+      --bg-card-dark: #1a1a1a;
+      --text-dark: #ffffff;
+      --accent-dark: #5865f2;
+      --accent-hover-dark: #4752c4;
+      --status-running-dark: #4caf50;
+      --status-stopped-dark: #f44336;
+      --textarea-bg-dark: #000000;
+      --textarea-text-dark: #ffffff;
+
+      /* Light Theme Colors */
+      --bg-light: #f0f0f0;
+      --bg-card-light: #ffffff;
+      --text-light: #111111;
+      --accent-light: #5865f2;
+      --accent-hover-light: #4752c4;
+      --status-running-light: #4caf50;
+      --status-stopped-light: #f44336;
+      --textarea-bg-light: #e0e0e0;
+      --textarea-text-light: #111111;
+
+      --font-main: 'Segoe UI', Arial, sans-serif;
+    }
+
+    body[data-theme="dark"] {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    body[data-theme="dark"] main {
+      background: var(--bg-card-dark);
+    }
+
+    body[data-theme="dark"] button {
+      background: var(--accent-dark);
+      color: var(--text-dark);
+    }
+
+    body[data-theme="dark"] button:hover {
+      background: var(--accent-hover-dark);
+    }
+
+    body[data-theme="dark"] .running {
+      color: var(--status-running-dark);
+    }
+
+    body[data-theme="dark"] .stopped {
+      color: var(--status-stopped-dark);
+    }
+
+    body[data-theme="dark"] textarea {
+      background: var(--textarea-bg-dark);
+      color: var(--textarea-text-dark);
+    }
+
+    body[data-theme="light"] {
+      background: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    body[data-theme="light"] main {
+      background: var(--bg-card-light);
+    }
+
+    body[data-theme="light"] button {
+      background: var(--accent-light);
+      color: var(--text-light);
+    }
+
+    body[data-theme="light"] button:hover {
+      background: var(--accent-hover-light);
+    }
+
+    body[data-theme="light"] .running {
+      color: var(--status-running-light);
+    }
+
+    body[data-theme="light"] .stopped {
+      color: var(--status-stopped-light);
+    }
+
+    body[data-theme="light"] textarea {
+      background: var(--textarea-bg-light);
+      color: var(--textarea-text-light);
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: var(--accent-dark);
+      margin: 0;
+    }
+
+    main {
+      width: 100%;
+      max-width: 800px;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      transition: background 0.3s;
+    }
+
+    textarea {
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      resize: none;
+      margin-bottom: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    label {
+      font-size: 1rem;
+      margin-bottom: 6px;
+      display: inline-block;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    #themeToggle {
+      cursor: pointer;
+      font-size: 1.4rem;
+      user-select: none;
+      padding: 12px;
+    }
+
+    #counter {
+      text-align: center;
+      font-size: 1rem;
+      margin: 10px 0 5px;
+      color: #555;
+    }
+
+    #status {
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .running {
+      color: #4caf50;
+    }
+
+    .stopped {
+      color: #f44336;
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 0.8rem;
+      color: #aaa;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+      button {
+        flex: 100%;
+      }
+    }
+  </style>
 </head>
+<body data-theme="dark">
+  <header>
+    <h1><em>🚀 the endless nitro generator</em></h1>
+  </header>
 
-<style>
-	body {
-                   background-image: url('https://wallpapercave.com/wp/wp5554240.jpg');
-  		   background-repeat: no-repeat;
-  		   background-attachment: fixed;
-  		   background-size: cover;
-	     }
-	
-  textarea {
-    background-color: #000;
-    border: 1px solid #000;
-    color: #ffffff;
-    padding: 8px;
-    font-family: Verdana;
-}
+  <main>
+    <textarea id="a" rows="10" readonly>click generate to start generating.
 
-body {
-    background-color: #000;
-}
-
-input {
-    background-color: #0E0E0E;
-    color: #ffffff;
-}
-
-button {
-	background-color:#000000;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:17px;
-	padding:7px 8px;
-	text-decoration:none;
-  }
-button:active {
-	position:relative;
-	top:1px;
-}
-</style>
-<div>
-<h1 style="font-family: Arial; color: #ffffff">𝙉𝘼𝘽𝙄𝙇'𝙎 𝘿𝙄𝙎𝘾𝙊𝙍𝘿 𝙉𝙄𝙏𝙍𝙊 𝙂𝙀𝙉𝙀𝙍𝘼𝙏𝙀𝙍</h1>
-<textarea id="a" rows="11" cols="100" readonly="" style="resize: none;">𝘕𝘢𝘣𝘪𝘭'𝘴 𝘌𝘯𝘥𝘭𝘦𝘴𝘴 𝘕𝘪𝘵𝘳𝘰 𝘎𝘦𝘯𝘦𝘳𝘢𝘵𝘰𝘳
 </textarea>
-<p></p>  
-<p></p>
-<p style="font-family: Arial; color: #ffffff">𝙄𝙉𝙋𝙐𝙏 𝙃𝙊𝙒 𝙈𝘼𝙉𝙔 𝙐𝙉𝘾𝙃𝙀𝘾𝙆𝙀𝘿 𝙉𝙄𝙏𝙍𝙊 𝘾𝙊𝘿𝙀𝙎 𝙔𝙊𝙐 𝙒𝘼𝙉𝙏 𝙏𝙊 𝙂𝙀𝙉 𝙋𝙀𝙍 𝙎𝙀𝘾</p>
-<input type="text" id="speed" value="5">
-<p></p>
-<button id="generate" class="button">
-  Generate
-</button>
-    <p></p>
-  <button id="stop" class="button">
-  Stop
-</button>
-      
-<button onclick="stop(); document.getElementById('a').value = '\n\𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝗿𝗲𝘀𝗲𝘁 𝘁𝗵𝗲 𝗰𝗼𝗱𝗲𝘀! nabilw0rld#8792 𝗠𝗮𝗱𝗲 𝗧𝗵𝗶𝘀! ;)\n\n\n'; document.getElementById('b').value = '';" class="button" id="clear">Reset</button>
-<textarea style="display: none;" id="b" rows="11" cols="100" readonly=""></textarea>
-	<script src="main.js"></script>
-</div>
-	<p></p>
 
-</body></html>
+    <label for="speed">how many unchecked nitro codes per second:</label>
+    <input type="number" id="speed" value="5" min="1" max="100">
+
+    <div class="btn-group">
+      <button id="generate">generate</button>
+      <button id="stop">stop</button>
+      <button id="clear">reset</button>
+      <button id="save">save</button>
+      <span id="themeToggle">🌙</span>
+    </div>
+
+    <p id="counter">codes generated: 0 (elapsed: 0s)</p>
+    <p id="status" class="stopped">🔴 status: stopped</p>
+
+    <textarea id="b" style="display:none;" rows="10" readonly></textarea>
+  </main>
+
+  <footer>
+    <p>made with ❤️ by nabil</p>
+  </footer>
+
+  <script>
+    let codeCount = 0;
+    let startTime = null;
+    let timeInterval = null;
+    let gInterval = null;
+    let scrollInterval = null;
+
+    const counterEl = document.getElementById('counter');
+    const statusEl = document.getElementById('status');
+    const bodyEl = document.body;
+    const themeToggle = document.getElementById('themeToggle');
+
+    // Redirect console.log to textarea
+    (function(){
+      var oldLog = console.log;
+      console.log = function (message) {
+          document.getElementById('a').value += message;
+          oldLog.apply(console, arguments);
+      };
+    })();
+
+    function download(filename, text) {
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+      element.setAttribute('download', filename);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+
+    if (navigator.userAgent.indexOf('Mobile') !== -1) { 
+      document.getElementById('save').style.display = "none"; 
+      document.getElementById('a').style.height = "100px";
+    }
+
+    function updateCounter() {
+      let elapsed = startTime ? Math.floor((Date.now() - startTime) / 1000) : 0;
+      counterEl.innerText = "Codes generated: " + codeCount + " (Elapsed: " + elapsed + "s)";
+    }
+
+    function setStatus(running) {
+      if (running) {
+        statusEl.innerText = "🟢 current status: generating";
+        statusEl.className = "running";
+      } else {
+        statusEl.innerText = "🔴 current status: stopped";
+        statusEl.className = "stopped";
+      }
+    }
+
+    function startGenerating() {
+      let triesPerSecond = document.getElementById('speed').value;
+
+      stopGenerating();
+
+      startTime = Date.now();
+      timeInterval = setInterval(updateCounter, 1000);
+      setStatus(true);
+
+      function getGiftCode() {
+          let code = '';
+          let dict = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+          for (let i = 0; i < 24; i++) {
+              code += dict.charAt(Math.floor(Math.random() * dict.length));
+          }
+          console.log('https://discord.gift/' + code + "\n");
+          document.getElementById('b').value += code + '\n';
+
+          codeCount++;
+          updateCounter();
+      }
+
+      getGiftCode();
+      gInterval = setInterval(getGiftCode, (500/triesPerSecond));
+      scrollInterval = setInterval(() => {
+        document.getElementById("a").scrollTop = document.getElementById("a").scrollHeight;
+      }, 100);
+    }
+
+    function stopGenerating() {
+      clearInterval(gInterval);
+      clearInterval(scrollInterval);
+      clearInterval(timeInterval);
+      gInterval = null;
+      scrollInterval = null;
+      timeInterval = null;
+      setStatus(false);
+    }
+
+    function resetAll() {
+      stopGenerating();
+      codeCount = 0;
+      startTime = null;
+      updateCounter();
+      document.getElementById('a').value = '\nsuccessfully reset the codes!\n\n\n';
+      document.getElementById('b').value = '';
+    }
+
+    function toggleTheme() {
+      if (bodyEl.dataset.theme === 'dark') {
+        bodyEl.dataset.theme = 'light';
+        themeToggle.innerText = '🌙';
+      } else {
+        bodyEl.dataset.theme = 'dark';
+        themeToggle.innerText = '🌞';
+      }
+    }
+
+    // Button events
+    document.getElementById('generate').addEventListener("click", startGenerating);
+    document.getElementById('stop').addEventListener("click", stopGenerating);
+    document.getElementById('clear').addEventListener("click", resetAll);
+    document.getElementById('save').addEventListener("click", () => {
+      download("nitro_codes.txt", document.getElementById('b').value);
+    });
+    themeToggle.addEventListener("click", toggleTheme);
+
+    updateCounter();
+    setStatus(false);
+  </script>
+</body>
+</html>
